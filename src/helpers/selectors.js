@@ -7,3 +7,5 @@ export function getAppointmentsForDay(state, day) {
       }
     }
   }
+  return newArr;
+}
