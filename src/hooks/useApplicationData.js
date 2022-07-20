@@ -37,7 +37,6 @@ export default function useApplicationData() {
   };
 
   const updateSpots = function (dayName, days, appointments) {
-    //find the day object
     const day = days.find((d) => d.name === dayName);
 
     const spots = getSpotsForDay(day, appointments);
