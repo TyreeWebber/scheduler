@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
@@ -27,6 +27,7 @@ export default function useApplicationData() {
   const getSpotsForDay = function (day, appointments) {
     let spots = 0;
     for (const id of day.appointments) {
+       //getting the appointments for the day
       const appointment = appointments[id];
       if (!appointment.interview) {
         spots++;
@@ -37,10 +38,10 @@ export default function useApplicationData() {
   };
 
   const updateSpots = function (dayName, days, appointments) {
+    // finds day
     const day = days.find((d) => d.name === dayName);
-
     const spots = getSpotsForDay(day, appointments);
-
+    // if day, update the spots
     return days.map((item) =>
       item.name === dayName ? { ...day, spots } : item
     );
@@ -62,6 +63,7 @@ export default function useApplicationData() {
       appointments,
     });
 
+     // setting the state with the appointments and spots after booking
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       const days = updateSpots(state.day, state.days, appointments);
       setState({ ...state, appointments, days });
@@ -77,7 +79,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment,
     };
-
+     // setting the state with the appointments and spots after deleting
     return axios.delete(`/api/appointments/${id}`).then(() => {
       const days = updateSpots(state.day, state.days, appointments);
       setState({ ...state, appointments, days });
