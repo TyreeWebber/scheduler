@@ -11,23 +11,10 @@ export default function useApplicationData() {
 
   const setDay = (day) => setState({ ...state, day });
 
-  useEffect(() => {
-    Promise.all([
-      axios.get(`/api/days`),
-      axios.get(`/api/appointments`),
-      axios.get(`/api/interviewers`),
-    ]).then((all) => {
-      const days = all[0].data;
-      const appointments = all[1].data;
-      const interviewers = all[2].data;
-      setState((prev) => ({ ...prev, days, appointments, interviewers }));
-    });
-  }, []);
-
   const getSpotsForDay = function (day, appointments) {
     let spots = 0;
     for (const id of day.appointments) {
-       //getting the appointments for the day
+      //getting the appointments for the day
       const appointment = appointments[id];
       if (!appointment.interview) {
         spots++;
@@ -62,7 +49,6 @@ export default function useApplicationData() {
       ...state,
       appointments,
     });
-
      // setting the state with the appointments and spots after booking
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
       const days = updateSpots(state.day, state.days, appointments);
@@ -85,6 +71,19 @@ export default function useApplicationData() {
       setState({ ...state, appointments, days });
     });
   }
+
+  useEffect(() => {
+    Promise.all([
+      axios.get(`/api/days`),
+      axios.get(`/api/appointments`),
+      axios.get(`/api/interviewers`),
+    ]).then((all) => {
+      const days = all[0].data;
+      const appointments = all[1].data;
+      const interviewers = all[2].data;
+      setState((prev) => ({ ...prev, days, appointments, interviewers }));
+    });
+  }, []);
 
   return { state, setDay, bookInterview, cancelInterview };
 }
