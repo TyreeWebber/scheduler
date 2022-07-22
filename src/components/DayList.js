@@ -1,5 +1,5 @@
 import React from "react";
-import DayListItem from "components/DayListItem";
+import DayListItem from "./DayListItem";
 
 export default function DayList(props) {
   const mappedDate = props.days.map((day) => {

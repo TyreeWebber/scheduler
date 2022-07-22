@@ -1,14 +1,14 @@
-import "components/Application.scss";
-import Appointment from "components/Appointment";
-import DayList from "components/DayList";
+import "./Application.scss";
+import Appointment from "./Appointment";
+import DayList from "./DayList";
 import React from "react";
 import {
   getAppointmentsForDay,
   getInterview,
   getInterviewersForDay,
-} from "helpers/selectors";
+} from "../helpers/selectors";
 
-import useApplicationData from "hooks/useApplicationData";
+import useApplicationData from "../hooks/useApplicationData";
 
 export default function Application(props) {
   const {
